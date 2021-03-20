@@ -1,7 +1,5 @@
 package io.xiaozy;
 
-import java.util.Arrays;
-
 /**
  * https://leetcode-cn.com/problems/beautiful-arrangement/
  * @author xiaozongyang
@@ -17,37 +15,33 @@ public class PerfectArray {
     public static int countArrangement(int n) {
         int []selected = new int[n];
         int ls = 0;
+
+        int []candidates = new int[n];
+
         Result result = new Result();
 
-        backtrace(selected, ls, n, result);
+        backtrace(1, result, selected, ls, candidates, n);
         return result.count;
     }
 
-    public static void backtrace(int[] selected, int ls, int n, Result result) {
+    public static void backtrace(int index, Result result, int[] selected, int ls, int[] candidates,
+        int lc) {
         if (ls == selected.length) {
             result.count += 1;
             return;
         }
-        for (int j = 1; j <= n; j++) {
-            if (contains(selected, j) || !isPerfect(ls + 1, j)) {
+        for (int i = 0; i < lc; i++) {
+            if (isNotPerfect(index, candidates[i])) {
                 continue;
             }
-            // select
-            selected[ls] = j;
-            backtrace(selected, ls + 1, n, result);
 
-            // unselect
-            selected[ls] = 0;
-        }
-    }
+            selected[ls] = candidates[i];
+            swap(candidates, i, lc - 1);
 
-    private static boolean contains(int[] selected, int j) {
-        for (int s: selected) {
-            if (s == j) {
-                return true;
-            }
+            backtrace(index + 1, result, candidates, ls + 1, candidates, lc - 1);
+
+            swap(candidates, i, lc - 1);
         }
-        return false;
     }
 
     private static void swap(int[] candidates, int i, int j) {
@@ -56,8 +50,8 @@ public class PerfectArray {
         candidates[j] = tmp;
     }
 
-    static boolean isPerfect(int i, int n) {
-        return i % n == 0 || n % i == 0;
+    static boolean isNotPerfect(int i, int n) {
+        return i % n != 0 && n % i != 0;
     }
 
     public static class Result {
