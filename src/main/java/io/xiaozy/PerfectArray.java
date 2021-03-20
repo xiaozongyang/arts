@@ -1,15 +1,19 @@
 package io.xiaozy;
 
 /**
- * https://leetcode-cn.com/problems/beautiful-arrangement/
+ * Problem: https://leetcode-cn.com/problems/beautiful-arrangement/
+ * Solution Reference: https://mp.weixin.qq.com/s/nMUHqvwzG2LmWA9jMIHwQQ
  * @author xiaozongyang
  */
 public class PerfectArray {
 
     public static void main(String[] args) {
-        for (int i = 1; i <= 3; i++) {
+        long start = System.currentTimeMillis();
+        for (int i = 1; i <= 15; i++) {
             System.out.println(countArrangement(i));
         }
+        long end = System.currentTimeMillis();
+        System.out.println("cost=" + (end - start) + "ms");
     }
 
     public static int countArrangement(int n) {
@@ -17,6 +21,9 @@ public class PerfectArray {
         int ls = 0;
 
         int []candidates = new int[n];
+        for (int i = 0; i < n; i++) {
+            candidates[i] = i + 1;
+        }
 
         Result result = new Result();
 
@@ -38,7 +45,7 @@ public class PerfectArray {
             selected[ls] = candidates[i];
             swap(candidates, i, lc - 1);
 
-            backtrace(index + 1, result, candidates, ls + 1, candidates, lc - 1);
+            backtrace(index + 1, result, selected, ls + 1, candidates, lc - 1);
 
             swap(candidates, i, lc - 1);
         }
@@ -47,7 +54,7 @@ public class PerfectArray {
     private static void swap(int[] candidates, int i, int j) {
         int tmp = candidates[j];
         candidates[j] = candidates[i];
-        candidates[j] = tmp;
+        candidates[i] = tmp;
     }
 
     static boolean isNotPerfect(int i, int n) {
