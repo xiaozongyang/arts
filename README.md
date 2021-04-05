@@ -9,4 +9,5 @@ ARTS 是一个学习活动，每周一次，包括四项
 - S: Share 分享阅读到的书或观点
 
 ## 学习打卡
-- [2021-03-20](#todo)
+- [2021-03-20](https://xiaozongyang.github.io/2021/03/28/arts-20210320/)
+- [2021-03-28](https://xiaozongyang.github.io/2021/03/28/arts-20210328/)
